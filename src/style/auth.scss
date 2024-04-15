@@ -3,4 +3,34 @@
     height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
+    padding: 20px;
+
+    .auth-title {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+
+    .auth-form {
+        margin: 0 auto;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .auth-text {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #666;
+        text-align: end;
+    }
+
+    .auth-link {
+        color: rgb(34, 85, 143);
+        transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+        &:hover {
+            color: rgb(96, 126, 160);
+            transform: scale(1.06);
+        }
+    }
 }
