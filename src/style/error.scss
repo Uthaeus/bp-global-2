@@ -1,0 +1,24 @@
+
+.error {
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .error-title {
+        font-size: 40px;
+        margin-bottom: 2rem;
+    }
+
+    .error-link {
+        font-size: 20px;
+        color: rgb(34, 85, 143);
+        transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+        &:hover {
+            color: rgb(96, 126, 160);
+            transform: scale(1.06);
+        }
+    }
+}
