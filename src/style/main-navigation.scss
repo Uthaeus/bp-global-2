@@ -5,6 +5,39 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
-    background-color: rgba(0, 0, 0, 0.171);
+    padding: 0 40px;
+    background-color: rgb(29, 30, 31);
+
+    .main-navigation-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .main-navigation-right {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-logo {
+        margin-right: 20px;
+    }
+
+    .nav-link {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: rgb(160, 126, 81);
+        text-decoration: none;
+        margin: 0 20px;
+        transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+        &:hover {
+            color: rgb(96, 126, 160);
+            transform: scale(1.06);
+        }
+    }
+
+    .link-active {
+        color: rgb(34, 85, 143);
+        border-bottom: 1px solid rgb(34, 85, 143);
+    }
 }

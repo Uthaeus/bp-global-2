@@ -16,18 +16,19 @@ export default function Signup() {
 
             <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
 
-                <div className="form-group">
+                <div className="form-group mb-3">
                     <label htmlFor="email">Email</label>
                     <input
                         type="email"
                         id="email"
                         className="form-control"
+                        autoFocus={true}
                         {...register("email", { required: true })}
                     />
                     {errors.email && <span className="error">This field is required</span>}
                 </div>
 
-                <div className="form-group">
+                <div className="form-group mb-3">
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
@@ -38,7 +39,7 @@ export default function Signup() {
                     {errors.password && <span className="error">This field is required</span>}
                 </div>
 
-                <div className="form-group">
+                <div className="form-group mb-4">
                     <label htmlFor="confirmPassword">Confirm Password</label>
                     <input
                         type="password"
@@ -48,9 +49,11 @@ export default function Signup() {
                     />
                     {errors.confirmPassword && <span className="error">This field is required</span>}
                 </div>
-            </form>
 
-            <p className="auth-text">Already have an account? <Link to="/login" className="auth-link">Log in</Link></p>
+                <button type="submit" className="btn btn-primary mb-3">Sign up</button>
+
+                <p className="auth-text">Already have an account? <Link to="/login" className="auth-link">Log in</Link></p>
+            </form>
         </div>
     );
 }
