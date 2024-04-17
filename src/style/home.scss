@@ -1,4 +1,45 @@
 
 .home {
     height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .homepage-title {
+        font-size: 4.2em;
+        font-weight: bolder;
+        color: white;
+        text-shadow: 1px 1px 2px $black;
+        margin-bottom: 25px;
+    }
+
+    .homepage-subtitle-wrapper {
+        padding: 8px 30px 0px 30px;
+        background: linear-gradient(40deg, $blue100, $blue200, $blue300, $blue400);
+
+        .homepage-subtitle {
+            font-size: 2.6em;
+            color: white;
+        }
+    }
+
+    .homepage-btn {
+        margin-top: 80px;
+        padding: 8px 30px;
+        background-color: $blue200;
+        border: 2px solid white;
+        opacity: 0.8;
+        color: $black;
+        font-size: 1.7em;
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.408);
+        transition: opacity 300ms ease-in-out, background-color 300ms ease-in-out, color 300ms ease-in-out, border-color 300ms ease-in-out;
+
+        &:hover {
+            opacity: 1;
+            background-color: $blue500;
+            border-color: $blue500;
+            color: white;
+        }
+    }
 }
