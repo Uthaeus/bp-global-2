@@ -12,6 +12,7 @@ export default function MainNavigation() {
 
             <div className="main-navigation-right">
                 <NavLink to="/" className={({ isActive }) => isActive ? "nav-link link-active" : "nav-link"}>Home</NavLink>
+                <NavLink to="/about" className={({ isActive }) => isActive ? "nav-link link-active" : "nav-link"}>About</NavLink>
                 <NavLink to="/login" className={({ isActive }) => isActive ? "nav-link link-active" : "nav-link"}>Log in</NavLink>
                 <NavLink to="/signup" className={({ isActive }) => isActive ? "nav-link link-active" : "nav-link"}>Sign up</NavLink>
             </div>
