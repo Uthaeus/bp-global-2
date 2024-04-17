@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { setDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase-config";
+import { setDoc, doc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
 
 export default function Signup() {
     const navigate = useNavigate();

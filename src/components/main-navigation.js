@@ -1,12 +1,21 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
+
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 import { UserContext } from "../store/user-context";
 
 import logo from '../assets/images/bp_global_logo.png';
 
 export default function MainNavigation() {
-    const { user, isAdmin } = useContext(UserContext);
+    const navigate = useNavigate();
+    const { user, isAdmin, logOutUser } = useContext(UserContext);
+
+    const signOutHandler = async () => {
+        logOutUser();
+        navigate('/');
+    }
     
     return (
         <div className="main-navigation">
@@ -21,14 +30,17 @@ export default function MainNavigation() {
 
                 <div className="navigation-links-wrapper">
 
-                    <NavLink to='/' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Home</NavLink>
+                    <NavLink to='/' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'} end>Home</NavLink>
                     <NavLink to='/about' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>About Us</NavLink>
                     <NavLink to='/contact' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Contact Us</NavLink>
 
-                    {user ? isAdmin ? (
-                        <NavLink to='/admin' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Admin</NavLink>
-                    ) : (
-                        <NavLink to='/account' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>My Account</NavLink>
+                    {isAdmin && <NavLink to='/admin' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Admin</NavLink>}
+
+                    {user ? (
+                        <>
+                            <NavLink to='/account' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>My Account</NavLink>
+                            <p className="nav-link" onClick={signOutHandler}><i className="bi bi-door-open-fill"></i></p>
+                        </>
                     ) : (
                         <>
                             <NavLink to='/login' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Login</NavLink>

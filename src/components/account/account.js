@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { getDocs, collection, query, where } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db } from "../../firebase";
 
 import { UserContext } from "../../store/user-context";
 

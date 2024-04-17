@@ -1,16 +1,17 @@
 import { createContext, useState, useContext, useEffect } from "react";
 
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, doc } from "firebase/firestore";
 
-import { db } from "../firebase-config";
-import { auth } from "../firebase-config";
+import { db } from "../firebase";
+import { auth } from "../firebase";
 
 export const UserContext = createContext({
     user: null,
     isAdmin: false,
     setUser: () => {},
-    setIsAdmin: () => {}
+    setIsAdmin: () => {},
+    logOutUser: () => {},
 });
 
 function UserContextProvider({ children }) {
@@ -34,16 +35,30 @@ function UserContextProvider({ children }) {
                     setIsAdmin(true);
                 }
             }
+        } else {
+            setUser(null);
+            setIsAdmin(false);
         }
 
         setLoading(false);
     }
 
+    const logOutUser = async () => {
+        try {
+            await signOut(auth);
+            setUser(null);
+            setIsAdmin(false);
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
     const value = {
         user,
         isAdmin,
         setUser,
-        setIsAdmin
+        setIsAdmin,
+        logOutUser
     };
 
     return (
