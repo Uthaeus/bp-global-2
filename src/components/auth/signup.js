@@ -23,6 +23,7 @@ export default function Signup() {
             const user = userCredential.user;
 
             await setDoc(doc(db, "users", user.uid), {
+                id: user.uid,
                 email: data.email,
                 role: "user"
             });
