@@ -1,13 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-export default function Signup() {
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase-config";
 
+export default function Signup() {
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+
+        if (data.password !== data.confirmPassword) {
+            console.log("Passwords do not match");
+            return;
+        }
 
         console.log(data);
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+            const user = userCredential.user;
+
+            await setDoc(doc(db, "users", user.uid), {
+                email: data.email,
+                role: "user"
+            });
+            
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     return (
