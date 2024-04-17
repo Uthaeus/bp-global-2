@@ -1,10 +1,11 @@
 @import 'bootstrap';
 
+@import './style/variables.scss';
+@import './style/main-footer.scss';
 @import './style/error.scss';
 @import './style/main-navigation.scss';
 @import './style/home.scss';
 @import './style/auth.scss';
-@import './style/main-footer.scss';
 
 body {
   margin: 0;
@@ -19,3 +20,5 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
