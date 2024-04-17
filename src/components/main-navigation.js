@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import logo from '../assets/images/bp_global_logo.png';
 
 export default function MainNavigation() {
+    const isLoggedIn = false;
     
     return (
         <div className="main-navigation">
@@ -17,11 +18,18 @@ export default function MainNavigation() {
 
                 <div className="navigation-links-wrapper">
 
+                    <NavLink to='/' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Home</NavLink>
                     <NavLink to='/about' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>About Us</NavLink>
                     <NavLink to='/contact' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Contact Us</NavLink>
 
-                    {isLoggedIn && (
-                        <Link to='/account' className="nav-link account-link">My Account</Link>
+                    {isLoggedIn ? (
+                        <NavLink to='/account' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>My Account</NavLink>
+                    )
+                    : (
+                        <>
+                            <NavLink to='/login' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Login</NavLink>
+                            <NavLink to='/signup' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Register</NavLink>
+                        </>
                     )}
                 </div>
             </div>
