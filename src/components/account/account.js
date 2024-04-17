@@ -4,6 +4,8 @@ import { db } from "../../firebase-config";
 
 import { UserContext } from "../../store/user-context";
 
+import OrdersChart from "../orders/orders-chart";
+
 export default function Account() {
     const { user } = useContext(UserContext);
     const [orders, setOrders] = useState([]);
@@ -32,9 +34,7 @@ export default function Account() {
         <div className="account">
             <h2 className="account-title">Account for {user.email}</h2>
 
-            <div className="orders-container">
-                <p className="account-text">You have no orders yet.</p>
-            </div>
+            <OrdersChart orders={orders} />
         </div>
     );
 }
