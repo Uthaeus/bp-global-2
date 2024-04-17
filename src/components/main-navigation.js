@@ -6,7 +6,7 @@ import { UserContext } from "../store/user-context";
 import logo from '../assets/images/bp_global_logo.png';
 
 export default function MainNavigation() {
-    const { user } = useContext(UserContext);
+    const { user, isAdmin } = useContext(UserContext);
     
     return (
         <div className="main-navigation">
@@ -25,10 +25,11 @@ export default function MainNavigation() {
                     <NavLink to='/about' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>About Us</NavLink>
                     <NavLink to='/contact' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Contact Us</NavLink>
 
-                    {user ? (
+                    {user ? isAdmin ? (
+                        <NavLink to='/admin' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Admin</NavLink>
+                    ) : (
                         <NavLink to='/account' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>My Account</NavLink>
-                    )
-                    : (
+                    ) : (
                         <>
                             <NavLink to='/login' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Login</NavLink>
                             <NavLink to='/signup' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Register</NavLink>

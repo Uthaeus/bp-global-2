@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 
 import { onAuthStateChanged } from "firebase/auth";
-import { getDoc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 
 import { db } from "../firebase-config";
 import { auth } from "../firebase-config";
@@ -18,10 +18,10 @@ function UserContextProvider({ children }) {
     const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    // useEffect(() => {
-    //     const unsubscribe = onAuthStateChanged(auth, initializeUser);
-    //     return unsubscribe;
-    // }, []);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, initializeUser);
+        return unsubscribe;
+    }, []);
 
     const initializeUser = async (user) => {
         if (user) {
