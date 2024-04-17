@@ -1,9 +1,12 @@
 import { NavLink, Link } from "react-router-dom";
+import { useContext } from "react";
+
+import { UserContext } from "../store/user-context";
 
 import logo from '../assets/images/bp_global_logo.png';
 
 export default function MainNavigation() {
-    const isLoggedIn = false;
+    const { user } = useContext(UserContext);
     
     return (
         <div className="main-navigation">
@@ -22,7 +25,7 @@ export default function MainNavigation() {
                     <NavLink to='/about' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>About Us</NavLink>
                     <NavLink to='/contact' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Contact Us</NavLink>
 
-                    {isLoggedIn ? (
+                    {user ? (
                         <NavLink to='/account' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>My Account</NavLink>
                     )
                     : (
