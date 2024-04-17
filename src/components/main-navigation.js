@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 
-import logo from '../assets/images/bp_global_logo.png';
+import logo from '../assets/images/bp_global_logo2.png';
 
 export default function MainNavigation() {
     
