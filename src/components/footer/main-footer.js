@@ -30,8 +30,8 @@ function MainFooter() {
             </div>
 
             <div className='d-flex mb-2'>
-                <Link to='/auth/login' className='footer-auth'>login</Link>
-                <Link to='/auth/register' className='footer-auth'>register</Link>
+                <Link to='/login' className='footer-auth'>login</Link>
+                <Link to='/signup' className='footer-auth'>register</Link>
             </div>
 
             <div className='footer-policies-wrapper'>

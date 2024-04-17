@@ -1,6 +1,9 @@
 import background from '../assets/images/forest_image.png';
+import { useNavigate } from 'react-router';
 
 function Home() {
+    const navigate = useNavigate();
+    
     return (
         <div className="home" style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <h1 className='homepage-title'>GREAT PEOPLE &#x2022; GREAT SOLUTIONS</h1>
