@@ -24,6 +24,7 @@ export default function Signup() {
 
             await setDoc(doc(db, "users", user.uid), {
                 id: user.uid,
+                name: data.name,
                 email: data.email,
                 role: "user"
             });
@@ -40,17 +41,32 @@ export default function Signup() {
             <h2 className="auth-title">Sign up</h2>
 
             <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
-
-                <div className="form-group mb-3">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        className="form-control"
-                        autoFocus={true}
-                        {...register("email", { required: true })}
-                    />
-                    {errors.email && <span className="error">This field is required</span>}
+                <div className="row">
+                    <div className="col-6">
+                        <div className="form-group mb-3">
+                            <label htmlFor="name">Name</label>
+                            <input 
+                                type="text"
+                                id="name"
+                                className="form-control"
+                                autoFocus={true}
+                                {...register("name", { required: true })}
+                            />
+                            {errors.name && <span className="text-danger">This field is required</span>}
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        <div className="form-group mb-3">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                className="form-control"
+                                {...register("email", { required: true })}
+                            />
+                            {errors.email && <span className="text-danger">This field is required</span>}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="form-group mb-3">
@@ -61,7 +77,7 @@ export default function Signup() {
                         className="form-control"
                         {...register("password", { required: true })}
                     />
-                    {errors.password && <span className="error">This field is required</span>}
+                    {errors.password && <span className="text-danger">This field is required</span>}
                 </div>
 
                 <div className="form-group mb-4">
@@ -72,7 +88,7 @@ export default function Signup() {
                         className="form-control"
                         {...register("confirmPassword", { required: true })}
                     />
-                    {errors.confirmPassword && <span className="error">This field is required</span>}
+                    {errors.confirmPassword && <span className="text-danger">This field is required</span>}
                 </div>
 
                 <button type="submit" className="btn btn-primary mb-3">Sign up</button>

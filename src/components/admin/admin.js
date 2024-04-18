@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query } from "firebase/firestore";
 
 import { db } from "../../firebase";
 
