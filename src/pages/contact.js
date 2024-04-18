@@ -1,9 +1,19 @@
 import { useForm } from 'react-hook-form';
+import { useContext, useEffect } from 'react';
+
+import { UserContext } from '../store/user-context';
 
 import image from '../assets/images/lumber_image_2.png';
 
 export default function Contact() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { user } = useContext(UserContext);
+
+    useEffect(() => {
+        if (user) {
+            reset({ email: user.email, name: user.name });
+        }
+    }, [user]);
 
     const onSubmit = async (data) => {
 
