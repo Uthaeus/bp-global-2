@@ -29,7 +29,7 @@ function NewOrder({ customers }) {
                             <label htmlFor="customer">Customer</label>
                             <select id="customer" className="form-control" {...register("customer", { required: true })}>
                                 <option value="">Select customer</option>
-                                {customers.map((customer, index) => <option key={index} value={customer.id}>{customer.email}</option>)}
+                                {customers.map((customer, index) => <option key={index} value={customer.id}>{customer.name}</option>)}
                             </select>
                             {errors.customer && <span className="text-danger">This field is required</span>}
                         </div>

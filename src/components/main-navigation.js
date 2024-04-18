@@ -23,7 +23,10 @@ export default function MainNavigation() {
             </div>
 
             <div className="main-navigation-right">
-                <p className="navigation-phone">800-555-5555</p>
+                <div>
+                    {user && <p className="navigation-welcome">{user.name}</p>}
+                    <p className="navigation-phone">800-555-5555</p>
+                </div>
 
                 <div className="navigation-links-wrapper">
 
