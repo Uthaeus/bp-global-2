@@ -1,0 +1,44 @@
+
+.orders-chart {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 2rem auto;
+    border-radius: 7px;
+
+    .orders-chart-header {
+        text-align: center;
+        background-color: $silver;
+
+        .orders-chart-title {
+            font-size: 1.2em;
+            color: $black;
+        }
+    }
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid $silver;
+    transition: background-color 300ms ease-in-out, transform 250ms ease-in-out;
+
+    .order-item-order-number {
+        font-size: 1.1em;
+        color: $blue400;
+    }
+
+    .order-item-date {
+        font-size: 0.9em;
+        color: $black;
+    }
+
+    &:hover {
+        background-color: $silver;
+        transform: scale(1.02);
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
+}

@@ -1,9 +1,6 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
-
 import { UserContext } from "../store/user-context";
 
 import logo from '../assets/images/bp_global_logo.png';

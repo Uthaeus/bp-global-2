@@ -5,7 +5,9 @@ function OrdersChart({ orders }) {
 
     return (
         <div className="orders-chart">
-            <h2 className="orders-chart-title">Orders</h2>
+            <div className="orders-chart-header">
+                <h2 className="orders-chart-title">Orders</h2>
+            </div>
 
             {orders.map(order => <OrderItem key={order.id} order={order} />)}
         </div>
