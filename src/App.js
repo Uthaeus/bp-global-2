@@ -10,6 +10,7 @@ import Login from "./components/auth/login";
 import Admin from "./components/admin/admin";
 import Account from "./components/account/account";
 import OrderDetail from "./components/orders/order-detail";
+import EditOrder from "./components/orders/edit-order";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/orders/:id",
         element: <OrderDetail />
+      },
+      {
+        path: "/orders/:id/edit",
+        element: <EditOrder />
       },
       {
         path: "/signup",

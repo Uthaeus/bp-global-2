@@ -23,7 +23,7 @@ export default function MainNavigation() {
             </div>
 
             <div className="main-navigation-right">
-                <div>
+                <div className="w-100 d-flex align-items-center justify-content-end">
                     {user && <p className="navigation-welcome">{user.name}</p>}
                     <p className="navigation-phone">800-555-5555</p>
                 </div>

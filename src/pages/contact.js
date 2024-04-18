@@ -13,7 +13,7 @@ export default function Contact() {
         if (user) {
             reset({ email: user.email, name: user.name });
         }
-    }, [user]);
+    }, [user, reset]);
 
     const onSubmit = async (data) => {
 

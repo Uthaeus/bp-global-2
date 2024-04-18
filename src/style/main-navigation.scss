@@ -30,15 +30,25 @@
             color: grey;
         }
 
+        .navigation-welcome {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: $black;
+            margin-right: 10%;
+        }
+
         .navigation-links-wrapper {
+            width: 100%;
             display: flex;
+            justify-content: flex-end;
+            align-items: baseline;
 
             .nav-link {
                 cursor: pointer;
                 font-size: 1.35em;
                 font-weight: 600;
                 color: $blue300;
-                margin-left: 35px;
+                margin-left: 4%;
                 margin-bottom: 0.1rem;
                 text-decoration: none;
                 transition: color 300ms ease-in-out, transform 250ms ease-in-out;
