@@ -7,7 +7,9 @@ import About from "./pages/about";
 import Contact from "./pages/contact";
 import Signup from "./components/auth/signup";
 import Login from "./components/auth/login";
+import Admin from "./components/admin/admin";
 import Account from "./components/account/account";
+import OrderDetail from "./components/orders/order-detail";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +30,16 @@ const router = createBrowserRouter([
         element: <Contact />
       },
       {
+        path: "/admin",
+        element: <Admin />
+      },
+      {
         path: "/account",
         element: <Account />
+      },
+      {
+        path: "/orders/:id",
+        element: <OrderDetail />
       },
       {
         path: "/signup",
