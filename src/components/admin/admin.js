@@ -7,6 +7,8 @@ import { db } from "../../firebase";
 
 import { UserContext } from "../../store/user-context";
 
+import NewOrder from "../orders/new-order";
+
 function Admin() {
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
@@ -46,9 +48,11 @@ function Admin() {
                 )}
 
                 {newOrder && (
-                    // TODO: Create new order form
-                    
-                    <button className="btn btn-danger admin-button" onClick={() => setNewOrder(false)}>Close</button>
+                    <>
+                        <NewOrder customers={users} />
+
+                        <button className="btn btn-danger admin-button" onClick={() => setNewOrder(false)}>Close</button>
+                    </>
                 )}
             </div>
         </div>
