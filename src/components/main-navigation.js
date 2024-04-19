@@ -17,7 +17,7 @@ export default function MainNavigation() {
     return (
         <div className="main-navigation">
             <div className="main-navigation-left">
-                <Link to='/' className="navigation-logo-link" end>
+                <Link to='/' className="navigation-logo-link">
                     <img src={logo} alt='nav-logo' width='80%' />
                 </Link>
             </div>

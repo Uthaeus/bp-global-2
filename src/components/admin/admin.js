@@ -39,7 +39,7 @@ function Admin() {
     return (
         <div className="admin">
             <div className="admin-header">
-                <h1 className="admin-title">Admin for {user.email}</h1>
+                <h1 className="admin-title">Admin for {user.name}</h1>
             </div>
 
             <div className="admin-content">

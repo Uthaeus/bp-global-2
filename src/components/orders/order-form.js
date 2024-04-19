@@ -27,7 +27,7 @@ function OrderForm({ order, customers }) {
     const imagePreviewHandler = (event) => {
 
         const file = event.target.files[0];
-        const fileName =  file.name + Date.now();
+        const fileName =  file.name + Date.now().toString();
 
         const storageRef = ref(storage, `images/${customer}/${fileName}`);
 
@@ -41,7 +41,12 @@ function OrderForm({ order, customers }) {
 
     const onSubmit = (data) => {
 
-        console.log(data);
+        console.log('order form submit data',data);
+        // if (order) {
+        //     updateDoc(doc(db, `users/${customer}/orders`, order.id), data);
+        // } else {
+        //     setDoc(doc(db, `users/${customer}/orders`, Date.now().toString()), data);
+        // }
 
 
     }
@@ -97,7 +102,7 @@ function OrderForm({ order, customers }) {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
 
-            <div className="order-image-preview-container">
+            {/* <div className="order-image-preview-container">
                 {images.length === 0 && <p>No images</p>}
                 {images.length > 0 && <p>Image Preview</p>}
                 {images.map((image, index) => (
@@ -105,7 +110,7 @@ function OrderForm({ order, customers }) {
                         <img src={image.url} alt="image" />
                     </div>
                 ))}
-            </div>
+            </div> */}
         </div>
     )
 }
