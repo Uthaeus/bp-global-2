@@ -9,6 +9,7 @@ import { db } from "../../firebase";
 
 function OrderForm({ order, customers }) {
     const [images, setImages] = useState([]);
+    const [customer, setCustomer] = useState("");
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -26,9 +27,9 @@ function OrderForm({ order, customers }) {
     const imagePreviewHandler = (event) => {
 
         const file = event.target.files[0];
-        const fileName = file.name + Date.now();
+        const fileName =  file.name + Date.now();
 
-        const storageRef = ref(storage, `images/${fileName}`);
+        const storageRef = ref(storage, `images/${customer}/${fileName}`);
 
         uploadBytes(storageRef, file).then(() => {
 
@@ -52,8 +53,11 @@ function OrderForm({ order, customers }) {
                     <div className="col-md-6">
                         <div className="form-group mb-3">
                             <label htmlFor="customer">Customer</label>
-                            <select className="form-control" id="customer" {...register("customer", { required: true })}>
+                            <select className="form-control" id="customer" {...register("customer", { required: true })} onChange={(event) => setCustomer(event.target.value)}>
                                 <option value="">Select customer</option>
+                                {customers.map((customer) => (
+                                    <option key={customer.id} value={customer.id}>{customer.name}</option>
+                                ))}
                             </select>
                             {errors.name && <span className="text-danger">This field is required</span>}
                         </div>
@@ -78,6 +82,7 @@ function OrderForm({ order, customers }) {
                             <input 
                                 type="file"
                                 id="image"
+                                disabled={customer === ""}
                                 className="form-control"
                                 onChange={imagePreviewHandler}
                             />
