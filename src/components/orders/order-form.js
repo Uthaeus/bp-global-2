@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { setDoc, doc, updateDoc } from "firebase/firestore";
+
+import { storage } from "../../firebase";
+import { db } from "../../firebase";
+
 function OrderForm({ order, customers }) {
     const [images, setImages] = useState([]);
 
@@ -9,14 +15,34 @@ function OrderForm({ order, customers }) {
     useEffect(() => {
 
         if (order) {
-            setImages([...order.images]);
+            if (order.images) {
+                setImages([...order.images]);
+            }
+
             reset(order);
         }
     }, [order, reset]);
 
+    const imagePreviewHandler = (event) => {
+
+        const file = event.target.files[0];
+        const fileName = file.name + Date.now();
+
+        const storageRef = ref(storage, `images/${fileName}`);
+
+        uploadBytes(storageRef, file).then(() => {
+
+            getDownloadURL(storageRef).then((url) => {
+                setImages([...images, { id: fileName, url }]);
+            });
+        })
+    }
+
     const onSubmit = (data) => {
 
         console.log(data);
+
+
     }
 
     return (
@@ -45,6 +71,24 @@ function OrderForm({ order, customers }) {
                     </div>
                 </div>
 
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form-group mb-3">
+                            <label htmlFor="image">Image</label>
+                            <input 
+                                type="file"
+                                id="image"
+                                className="form-control"
+                                onChange={imagePreviewHandler}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="col-md-6">
+
+                    </div>
+                </div>
+
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
 
@@ -53,7 +97,7 @@ function OrderForm({ order, customers }) {
                 {images.length > 0 && <p>Image Preview</p>}
                 {images.map((image, index) => (
                     <div className="order-image-preview" key={index}>
-                        <img src={image} alt="image" />
+                        <img src={image.url} alt="image" />
                     </div>
                 ))}
             </div>
