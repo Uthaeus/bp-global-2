@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
-import { setDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { setDoc, doc, updateDoc, collection, arrayUnion, addDoc } from "firebase/firestore";
 
 import { storage } from "../../firebase";
 import { db } from "../../firebase";
@@ -17,7 +17,7 @@ function OrderForm({ order, customers }) {
 
         if (order) {
             if (order.images) {
-                setImages([...order.images]);
+                // setImages(order.images);
             }
 
             reset(order);
@@ -38,17 +38,17 @@ function OrderForm({ order, customers }) {
                 ...data
             });
         } else {
-            const userRef = doc(db, "users", customer.id);
+            const userRef = doc(db, "users", data.customer);
 
             updateDoc(userRef, {
                 orders: arrayUnion({
-                    ...data,
+                    order_number: data.order_number,
                 }),
             });
 
-            setDoc(doc(db, "orders"), {
-                ...data,
-            });
+            addDoc(collection(db, "orders"), {
+                ...data
+            })
         }
 
         reset();
