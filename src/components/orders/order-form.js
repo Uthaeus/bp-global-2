@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { setDoc, doc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
+import { setDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 
 import { storage } from "../../firebase";
 import { db } from "../../firebase";
@@ -27,28 +27,72 @@ function OrderForm({ order, customers }) {
     const imagePreviewHandler = (event) => {
 
         const file = event.target.files[0];
-        const fileName =  file.name + Date.now().toString();
 
-        const storageRef = ref(storage, `images/${customer}/${fileName}`);
+        const storageRef = ref(storage, `images`);
 
         uploadBytes(storageRef, file).then(() => {
 
             getDownloadURL(storageRef).then((url) => {
-                setImages([...images, { id: fileName, url }]);
+                setImages([...images, url]);
             });
         })
+        .catch((error) => {
+
+            console.log(error);
+        });
+
+        reset({
+            image: null
+        })
+    }
+
+    const removeImageHandler = (url) => {
+
+        setImages(images.filter(image => image !== url));
+
+        const storageRef = ref(storage, url);
+
+        deleteObject(storageRef).then(() => {
+            
+            console.log('image deleted');
+
+        })
+        .catch((error) => {
+
+            console.log(error);
+        });
+
     }
 
     const onSubmit = (data) => {
 
         console.log('order form submit data',data);
-        // if (order) {
-        //     updateDoc(doc(db, `users/${customer}/orders`, order.id), data);
-        // } else {
-        //     setDoc(doc(db, `users/${customer}/orders`, Date.now().toString()), data);
-        // }
 
+        if (order) {
 
+            updateDoc(doc(db, "orders", order.id), {
+                ...data,
+                images
+            });
+        } else {
+
+            setDoc(doc(db, "orders"), {
+                ...data,
+                images
+            });
+
+            const userRef = doc(db, "users", data.customer);
+
+            updateDoc(userRef, {
+                orders: arrayUnion({
+                    order_number: data.order_number,
+                    images
+                })
+            })
+        }
+
+        reset();
+        setImages([]);
     }
 
     return (
@@ -102,15 +146,16 @@ function OrderForm({ order, customers }) {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
 
-            {/* <div className="order-image-preview-container">
+            <div className="order-image-preview-container">
                 {images.length === 0 && <p>No images</p>}
                 {images.length > 0 && <p>Image Preview</p>}
                 {images.map((image, index) => (
                     <div className="order-image-preview" key={index}>
                         <img src={image.url} alt="image" />
+                        <button type="button" className="btn btn-danger" onClick={(url) => removeImageHandler(url)}>Remove</button>
                     </div>
                 ))}
-            </div> */}
+            </div>
         </div>
     )
 }
