@@ -26,7 +26,8 @@ export default function Signup() {
                 id: user.uid,
                 name: data.name,
                 email: data.email,
-                role: "user"
+                role: "user", 
+                orders: [],
             });
             
             navigate("/");
