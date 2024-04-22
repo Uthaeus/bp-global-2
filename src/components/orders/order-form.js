@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { db } from "../../firebase";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
+
+import { db, storage } from "../../firebase";
 
 function OrderForm({ order, customers }) {
-    // const [images, setImages] = useState([]);
     const [customer, setCustomer] = useState("");
+    const [images, setImages] = useState([]);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -13,15 +15,25 @@ function OrderForm({ order, customers }) {
 
         if (order) {
             if (order.images) {
-                // setImages(order.images);
+                setImages(order.images);
             }
-
             reset(order);
         }
     }, [order, reset]);
 
-    
+    const handleImageChange = async (e) => {
+        const imageFiles = Array.from(e.target.files);
+        const imageUrls = [];
 
+        for (const file of imageFiles) {
+            const storageRef = ref(storage, `images/${file.name}`);
+            await uploadString(storageRef, file);
+            const downloadURL = await getDownloadURL(storageRef);
+            imageUrls.push(downloadURL);
+        }
+
+        setImages(imageUrls);
+    };
     
 
     const onSubmit = (data) => {
@@ -80,6 +92,23 @@ function OrderForm({ order, customers }) {
                             {errors.order_number && <span className="text-danger">This field is required</span>}
                         </div>
                     </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-6">
+                        <div className="form-group">
+                            <label htmlFor="images">Images</label>
+                            <input
+                                type="file"
+                                id="images"
+                                className="form-control"
+                                multiple
+                                onChange={handleImageChange}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="col-6" />
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit</button>
