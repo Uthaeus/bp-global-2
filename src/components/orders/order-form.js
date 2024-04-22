@@ -79,7 +79,7 @@ function OrderForm({ order, customers }) {
         }
 
         reset();
-        
+        setImages([]);
     }
 
     return (
