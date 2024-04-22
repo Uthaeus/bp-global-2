@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { ref, uploadString, getDownloadURL, deleteObject } from "firebase/storage";
+import { updateDoc, doc, addDoc, collection, arrayUnion } from "firebase/firestore";
 
 import { db, storage } from "../../firebase";
 
@@ -22,51 +23,55 @@ function OrderForm({ order, customers }) {
     }, [order, reset]);
 
     const handleImageChange = async (e) => {
-        const imageFiles = Array.from(e.target.files);
-        const imageUrls = [];
+        const file = e.target.files[0];
+        const fileName = file.name + Date.now();
 
-        for (const file of imageFiles) {
-            const fileName = file.name + Date.now().toString();
-            const storageRef = ref(storage, `images/${fileName}`);
-            await uploadString(storageRef, file);
-            const downloadURL = await getDownloadURL(storageRef);
-            imageUrls.push(downloadURL);
-        }
+        const storageRef = ref(storage, `images/${fileName}`);
 
-        setImages(imageUrls);
+        await uploadString(storageRef, file);
+
+        const url = await getDownloadURL(storageRef);
+
+        setImages([...images, url]);
     };
     
     const removeImageHandler = async (img) => {
-        setImages(images.filter((image) => image !== img));
-        
         const storageRef = ref(storage, img);
         await deleteObject(storageRef);
+        setImages(images.filter((image) => image !== img));
     }
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 
         console.log('order form submit data',data);
 
         if (order) {
 
-            updateDoc(doc(db, "orders", order.id), {
-                ...data
+            await updateDoc(doc(db, "orders", order.id), {
+                customer: data.customer,
+                order_number: data.order_number,
+                images: images,
+                updated_at: Date.now(),
             });
         } else {
             const userRef = doc(db, "users", data.customer);
 
-            updateDoc(userRef, {
+            await updateDoc(userRef, {
                 orders: arrayUnion({
                     order_number: data.order_number,
                     images: images,
                 }),
             });
 
-            addDoc(collection(db, "orders"), {
+            let docRef = await addDoc(collection(db, "orders"), {
                 customer: data.customer,
                 order_number: data.order_number,
                 images: images,
-            })
+            });
+
+            await updateDoc(docRef, {
+                id: docRef.id
+            });
         }
 
         reset();
@@ -112,7 +117,6 @@ function OrderForm({ order, customers }) {
                                 type="file"
                                 id="images"
                                 className="form-control"
-                                multiple
                                 onChange={handleImageChange}
                             />
                         </div>
@@ -126,8 +130,10 @@ function OrderForm({ order, customers }) {
 
             <div className="d-flex order-form-images-container">
                 {images.map(image => (
-                    <div key={image} className="order-form-image" style={{ width: "25%"}}>
+                    
+                    <div key={image} className="order-form-image" style={{ width: "25%", height: "100px"}}>
                         <img src={image} alt=""/>
+                        <p>url: {image}</p>
                         <button className="btn btn-danger" onClick={() => removeImageHandler(image)}>Remove</button>
                     </div>
                 ))}
