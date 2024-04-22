@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
-import { setDoc, doc, updateDoc, collection, arrayUnion, addDoc } from "firebase/firestore";
-
-import { storage } from "../../firebase";
 import { db } from "../../firebase";
 
 function OrderForm({ order, customers }) {
