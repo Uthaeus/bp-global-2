@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { ref, uploadString, getDownloadURL, deleteObject } from "firebase/storage";
 
 import { db, storage } from "../../firebase";
 
@@ -26,7 +26,8 @@ function OrderForm({ order, customers }) {
         const imageUrls = [];
 
         for (const file of imageFiles) {
-            const storageRef = ref(storage, `images/${file.name}`);
+            const fileName = file.name + Date.now().toString();
+            const storageRef = ref(storage, `images/${fileName}`);
             await uploadString(storageRef, file);
             const downloadURL = await getDownloadURL(storageRef);
             imageUrls.push(downloadURL);
@@ -35,6 +36,12 @@ function OrderForm({ order, customers }) {
         setImages(imageUrls);
     };
     
+    const removeImageHandler = async (img) => {
+        setImages(images.filter((image) => image !== img));
+        
+        const storageRef = ref(storage, img);
+        await deleteObject(storageRef);
+    }
 
     const onSubmit = (data) => {
 
@@ -51,11 +58,14 @@ function OrderForm({ order, customers }) {
             updateDoc(userRef, {
                 orders: arrayUnion({
                     order_number: data.order_number,
+                    images: images,
                 }),
             });
 
             addDoc(collection(db, "orders"), {
-                ...data
+                customer: data.customer,
+                order_number: data.order_number,
+                images: images,
             })
         }
 
@@ -113,6 +123,15 @@ function OrderForm({ order, customers }) {
 
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
+
+            <div className="d-flex order-form-images-container">
+                {images.map(image => (
+                    <div key={image} className="order-form-image" style={{ width: "25%"}}>
+                        <img src={image} alt=""/>
+                        <button className="btn btn-danger" onClick={() => removeImageHandler(image)}>Remove</button>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
