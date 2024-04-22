@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { ref, uploadString, getDownloadURL, deleteObject } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { updateDoc, doc, addDoc, collection, arrayUnion } from "firebase/firestore";
 
 import { db, storage } from "../../firebase";
@@ -28,7 +28,11 @@ function OrderForm({ order, customers }) {
 
         const storageRef = ref(storage, `images/${fileName}`);
 
-        await uploadString(storageRef, file);
+        const blob = new Blob([file], {
+            type: file.type
+        });
+
+        await uploadBytes(storageRef, blob);
 
         const url = await getDownloadURL(storageRef);
 
