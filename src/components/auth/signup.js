@@ -7,12 +7,15 @@ import { auth, db } from "../../firebase";
 
 export default function Signup() {
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const onSubmit = async (data) => {
 
         if (data.password !== data.confirmPassword) {
             console.log("Passwords do not match");
+            alert("Passwords do not match");
+
+            reset({ password: "", confirmPassword: "" });
             return;
         }
 
@@ -23,11 +26,9 @@ export default function Signup() {
             const user = userCredential.user;
 
             await setDoc(doc(db, "users", user.uid), {
-                id: user.uid,
                 name: data.name,
                 email: data.email,
                 role: "user", 
-                orders: [],
             });
             
             navigate("/");
