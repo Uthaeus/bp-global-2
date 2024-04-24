@@ -21,34 +21,28 @@ function OrdersContextProvider({ children }) {
     useEffect(() => {
         const getOrders = async () => {
             try {
-                let q;
-
-                if (isAdmin) {
-                    q = query(collection(db, "orders"));
-                } else {
-                    q = query(collection(db, "orders"), where("user", "==", customer.id));
+                if (user) {
+                    let q;
+                    if (isAdmin) {
+                        q = query(collection(db, "orders"));
+                    } else {
+                        q = query(collection(db, "orders"), where("customer", "==", user.id));
+                    }
+                    
+                    const querySnapshot = await getDocs(q);
+                    const orders = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                    
+                    setOrders(orders);
                 }
-                
-                const querySnapshot = await getDocs(q);
-
-                const orders = [];
-
-                querySnapshot.forEach((doc) => {
-                    orders.push({ ...doc.data(), id: doc.id });
-                });
-
-                setOrders(orders);
-            }
-            catch (error) {
+            } catch (error) {
                 console.log(error);
+                // Handle specific errors if needed
+            } finally {
+                setIsLoading(false);
             }
         }
-
-        if (user) {
-            getOrders();
-        }
-
-        setIsLoading(false);
+    
+        getOrders();
     }, [user, isAdmin]);
 
     const addOrder = async (order) => {
