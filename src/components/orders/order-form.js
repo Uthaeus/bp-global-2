@@ -71,6 +71,7 @@ function OrderForm({ order, customers }) {
                 customer: data.customer,
                 order_number: data.order_number,
                 images: images,
+                created_at: Date.now(),
             });
 
             await updateDoc(docRef, {
