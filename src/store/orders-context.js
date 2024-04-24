@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, createContext } from "react";
 
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { getDocs, collection, query, where, addDoc, deleteDoc } from "firebase/firestore";
 
 import { db } from "../firebase";
 
