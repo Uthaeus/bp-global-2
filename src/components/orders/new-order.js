@@ -1,9 +1,4 @@
 
-import { useState } from "react";
-
-// import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-
-// import { storage } from "../../firebase";
 
 import OrderForm from "./order-form";
 

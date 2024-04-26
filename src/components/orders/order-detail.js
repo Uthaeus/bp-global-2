@@ -9,7 +9,7 @@ function OrderDetail() {
     const { orders, deleteOrder } = useContext(OrdersContext);
     const navigate = useNavigate();
     const [order, setOrder] = useState({});
-    const { user, isAdmin } = useContext(UserContext);
+    const { isAdmin } = useContext(UserContext);
 
     useEffect(() => {
         setOrder(orders.find((order) => order.id === id));
