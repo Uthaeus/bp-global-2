@@ -50,33 +50,27 @@ function OrderForm({ order, customers }) {
         console.log('order form submit data',data);
 
         if (order) {
-
-            await updateDoc(doc(db, "orders", order.id), {
-                customer: data.customer,
-                order_number: data.order_number,
-                images: images,
-                updated_at: Date.now(),
-            });
-        } else {
-            const userRef = doc(db, "users", data.customer);
-
-            await updateDoc(userRef, {
-                orders: arrayUnion({
+            try {
+                await updateDoc(doc(db, "orders", order.id), {
+                    customer: data.customer,
                     order_number: data.order_number,
                     images: images,
-                }),
-            });
-
-            let docRef = await addDoc(collection(db, "orders"), {
-                customer: data.customer,
-                order_number: data.order_number,
-                images: images,
-                created_at: Date.now(),
-            });
-
-            await updateDoc(docRef, {
-                id: docRef.id
-            });
+                    updated_at: Date.now(),
+                });
+            } catch (error) {
+                console.log('update order error: ', error);
+            }
+        } else {
+            try {
+                await addDoc(collection(db, "orders"), {
+                    customer: data.customer,
+                    order_number: data.order_number,
+                    images: images,
+                    created_at: Date.now(),
+                });
+            } catch (error) {
+                console.log('new order error: ', error);
+            }
         }
 
         reset();

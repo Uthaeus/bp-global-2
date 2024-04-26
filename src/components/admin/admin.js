@@ -1,40 +1,17 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 
-import { getDocs, collection, query } from "firebase/firestore";
-
-import { db } from "../../firebase";
-
 import { UserContext } from "../../store/user-context";
+import { UsersContext } from "../../store/users-context";
 
 import NewOrder from "../orders/new-order";
 
 function Admin() {
     const navigate = useNavigate();
-    const [users, setUsers] = useState([]);
     const [newOrder, setNewOrder] = useState(false);
 
     const { user } = useContext(UserContext);
-
-    useEffect(() => {
-        const getUsers = async () => {
-            try {
-                const q = query(collection(db, "users"));
-                const querySnapshot = await getDocs(q);
-                const users = [];
-
-                querySnapshot.forEach((doc) => {
-                    users.push({ ...doc.data(), id: doc.id });
-                });
-
-                setUsers(users);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        getUsers();
-    }, []);
+    const { users } = useContext(UsersContext);
 
     return (
         <div className="admin">
