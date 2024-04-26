@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { UserContext } from "../../store/user-context";
 import { OrdersContext } from "../../store/orders-context";
@@ -11,7 +12,11 @@ export default function Account() {
 
     return (
         <div className="account">
-            <h2 className="account-title">Account for {user.name}</h2>
+            <div className="account-header">
+                <h2 className="account-title">Account for {user.name}</h2>
+                <h2 className="account-email">{user.email}</h2>
+                <Link to='/account/edit' className="account-edit-link">Edit Account</Link>
+            </div>
 
             <OrdersChart orders={orders} />
         </div>
