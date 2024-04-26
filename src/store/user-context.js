@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getDoc, doc } from "firebase/firestore";
@@ -17,7 +17,7 @@ export const UserContext = createContext({
 function UserContextProvider({ children }) {
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, initializeUser);
@@ -25,22 +25,26 @@ function UserContextProvider({ children }) {
     }, []);
 
     const initializeUser = async (user) => {
-        if (user) {
-            const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const userData = docSnap.data();
-                setUser({id: user.uid, ...userData });
-                if (userData.role === "admin") {
-                    setIsAdmin(true);
+        try {
+            if (user) {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const userData = docSnap.data();
+                    setUser({id: user.uid, ...userData });
+                    if (userData.role === "admin") {
+                        setIsAdmin(true);
+                    }
                 }
+            } else {
+                setUser(null);
+                setIsAdmin(false);
             }
-        } else {
-            setUser(null);
-            setIsAdmin(false);
+        } catch (error) {
+            console.log('initial user error: ', error);
+        } finally {
+            setIsLoading(false);
         }
-
-        setLoading(false);
     }
 
     const logOutUser = async () => {
@@ -63,7 +67,7 @@ function UserContextProvider({ children }) {
 
     return (
         <UserContext.Provider value={value}>
-            {!loading && children}
+            {!isLoading && children}
         </UserContext.Provider>
     );
 }
