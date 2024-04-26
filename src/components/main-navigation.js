@@ -38,8 +38,8 @@ export default function MainNavigation() {
 
                     {user ? (
                         <>
-                            <NavLink to='/account' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>My Account</NavLink>
-                            <p className="nav-link" onClick={signOutHandler}><i className="bi bi-door-open-fill"></i></p>
+                            { isAdmin ? <NavLink to='/admin' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>Admin</NavLink> : <NavLink to='/account' className={({isActive}) => isActive ? 'nav-link link-active' : 'nav-link'}>My Account</NavLink> }
+                            <p className="nav-link" onClick={signOutHandler}><i className="bi bi-door-open-fill fs-5"></i></p>
                         </>
                     ) : (
                         <>
