@@ -23,33 +23,51 @@ export default function AccountEdit() {
     }
 
     return (
-        <div className="account-edit">
-            <h2 className="account-edit-title">Edit Account</h2>
+        <div className="auth">
+            <h2 className="auth-title">Edit Account</h2>
 
-            <form className="account-edit-form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
 
-                <div className="form-group">
+                <div className="form-group mb-3">
                     <label htmlFor="name">Name</label>
                     <input
                         className="form-control"
                         type="text"
-                        name="name"
                         id="name"
                         {...register("name", { required: true })}
                     />
                     {errors.name && <p className="error-message">Name is required</p>}
                 </div>
 
-                <div className="form-group">
+                <div className="form-group mb-3">
                     <label htmlFor="email">Email</label>
                     <input
                         className="form-control"
                         type="email"
-                        name="email"
                         id="email"
                         {...register("email", { required: true })}
                     />
                     {errors.email && <p className="error-message">Email is required</p>}
+                </div>
+
+                <div className="form-group mb-3">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        className="form-control"
+                        type="password"
+                        id="password"
+                        {...register("password")}
+                    />
+                </div>
+
+                <div className="form-group mb-3">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <input 
+                        className="form-control"
+                        type="password"
+                        id="confirmPassword"
+                        {...register("confirmPassword")}
+                    />
                 </div>
 
                 <button className="account-edit-submit" type="submit">Submit</button>
