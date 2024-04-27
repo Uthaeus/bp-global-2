@@ -7,8 +7,6 @@ import { OrdersContext } from "../../store/orders-context";
 
 import NewOrder from "../orders/new-order";
 
-import AdminOrderChart from "./admin-orders/admin-order-chart";
-
 function Admin() {
     const navigate = useNavigate();
     const [ adminContent, setAdminContent ] = useState('');
