@@ -22,7 +22,7 @@ function Admin() {
 
                 <hr />
 
-                <p className="admin-menu-item" onClick={navigate('/account/edit')}>Edit Account</p>
+                <p className="admin-menu-item" onClick={() => navigate('/account/edit')}>Edit Account</p>
             </div>
 
             <div className="admin-body">
