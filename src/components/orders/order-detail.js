@@ -30,7 +30,7 @@ function OrderDetail() {
             <h2 className="order-detail-title">Order #{order.order_number}</h2>
 
             <div className="order-images-container">
-                {order.images.map((image) => (
+                {order.images && order.images.map((image) => (
                     <img key={image} className="order-image" src={image} alt="Order Image" />
                 ))}
             </div>
