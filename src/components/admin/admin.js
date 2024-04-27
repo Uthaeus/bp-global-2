@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 
 import { UserContext } from "../../store/user-context";
 import { UsersContext } from "../../store/users-context";
-import { OrdersContext } from "../../store/orders-context";
 
 import NewOrder from "../orders/new-order";
 
@@ -13,14 +12,16 @@ function Admin() {
 
     const { user } = useContext(UserContext);
     const { users } = useContext(UsersContext);
-    const { orders } = useContext(OrdersContext);
 
     return (
         <div className="admin">
             <div className="admin-menu">
                 <p className="admin-menu-item" onClick={() => setAdminContent('')}>Admin Home</p>
-                <p className="admin-menu-item" onClick={() => setAdminContent('orders')}>All Orders</p>
                 <p className="admin-menu-item" onClick={() => setAdminContent('users')}>All Users</p>
+                <p className="admin-menu-item" onClick={() => setAdminContent('new-order')}>Create New Order</p>
+
+                <hr />
+
                 <p className="admin-menu-item" onClick={navigate('/account/edit')}>Edit Account</p>
             </div>
 
@@ -31,20 +32,46 @@ function Admin() {
 
                 <div className="admin-content">
 
+                    {adminContent === '' && (
+                        <p className="admin-content-title">Admin Home</p>
+                    )}
 
+                    {adminContent === 'users' && (
+                        <>
+                            <p className="admin-content-title">All Users</p>
+
+                            <table className="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {users.map((user) => (
+                                        <tr key={user.id}>
+                                            <td>{user.name}</td>
+                                            <td>{user.email}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                            <button className="btn btn-secondary admin-button" onClick={() => setAdminContent('')}>Close Table</button>
+                        </>
+                    )}
+
+                    {adminContent === 'new-order' && (
+                        <>
+                            <p className="admin-content-title">New Order</p>
+
+                            <NewOrder customers={users} />
+
+                            <button className="btn btn-secondary admin-button" onClick={() => setAdminContent('')}>Close Table</button>
+                        </>
+                    )}
                 </div>
-                
-                {!newOrder && (
-                    <button className="btn btn-primary admin-button" onClick={() => setNewOrder(true)}>Create new order</button>
-                )}
-
-                {newOrder && (
-                    <>
-                        <NewOrder customers={users} />
-
-                        <button className="btn btn-danger admin-button" onClick={() => setNewOrder(false)}>Close</button>
-                    </>
-                )}
             </div>
         </div>
     );

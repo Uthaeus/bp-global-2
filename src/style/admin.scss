@@ -1,0 +1,52 @@
+
+.admin {
+    display: grid;
+    grid-template-columns: 20% 80%;
+
+    .admin-menu {
+        height: calc(100vh - 90px);
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid $silver;
+        padding: 2rem 1rem;
+
+        .admin-menu-item {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 1rem 0;
+            border-bottom: 1px solid $silver;
+            color: $blue300;
+            transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+            &:hover {
+                cursor: pointer;
+                color: $blue500;
+                border-bottom-color: $blue500;
+                transform: scale(1.04);
+            }
+        }
+    }
+
+    .admin-body {
+        display: flex;
+        flex-direction: column;
+
+        .admin-header {
+            height: 150px;
+
+            .admin-title {
+                margin: 2rem 0;
+                margin-left: 2rem;
+                font-size: 3em;
+                font-weight: bold;
+                color: $black;
+            }
+        }
+
+        .admin-content {
+            min-height: calc(100vh - 240px);
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
